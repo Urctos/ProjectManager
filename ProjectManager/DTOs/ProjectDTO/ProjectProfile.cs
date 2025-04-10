@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ProjectManager.Data.Models;
 
-namespace ProjectManager.DTOs
+namespace ProjectManager.DTOs.ProjectDTO
 {
     public class ProjectProfile : Profile
     {

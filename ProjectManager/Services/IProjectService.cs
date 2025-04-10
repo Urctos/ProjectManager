@@ -1,5 +1,5 @@
 ﻿using ProjectManager.Data.Models;
-using ProjectManager.DTOs;
+using ProjectManager.DTOs.ProjectDTO;
 
 namespace ProjectManager.Services
 {

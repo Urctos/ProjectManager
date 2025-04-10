@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ProjectManager.DTOs.ProjectDTO;
 
 namespace ProjectManager.DTOs.Validation
 {

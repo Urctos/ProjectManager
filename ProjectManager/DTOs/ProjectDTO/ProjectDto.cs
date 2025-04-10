@@ -1,6 +1,6 @@
 ﻿using Microsoft.Identity.Client;
 
-namespace ProjectManager.DTOs
+namespace ProjectManager.DTOs.ProjectDTO
 {
     public class ProjectDto
     {

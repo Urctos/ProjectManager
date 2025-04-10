@@ -3,7 +3,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManager.Data.Models;
-using ProjectManager.DTOs;
+using ProjectManager.DTOs.ProjectDTO;
 using ProjectManager.Exceptions;
 using ProjectManager.Services;
 
