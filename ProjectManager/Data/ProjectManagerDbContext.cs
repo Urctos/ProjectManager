@@ -9,8 +9,13 @@ namespace ProjectManager.Data
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectTask> ProjectTasks { get; set; }
+        public object IsCompleted { get; private set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProjectTask>()
+               .ToTable("ProjectTasks");
+
             modelBuilder.Entity<ProjectTask>()
                 .HasOne(pt => pt.Project)
                 .WithMany(p => p.ProjectTasks)
@@ -41,11 +46,11 @@ namespace ProjectManager.Data
                 .IsRequired(false);
 
             modelBuilder.Entity<ProjectTask>()
-                .Property(p => p.IsCompleted)
+                 .Property(p =>p.IsCompleted)
                 .IsRequired();
 
 
-            
+
         }
     }
 }

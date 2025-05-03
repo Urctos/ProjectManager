@@ -10,8 +10,5 @@ namespace ProjectManager.Services
         public Task<ProjectDto> Create(CreateProjectDto createProjectDto);
         public Task<ProjectDto> Update(UpdateProjectDto updateProjectDto);
         public Task Delate(int id);
-
-
-
     }
 }
