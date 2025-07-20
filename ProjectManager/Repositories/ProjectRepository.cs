@@ -35,7 +35,10 @@ namespace ProjectManager.Repositories
 
         public async Task<Project> GetById(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
+            var project = await _context.Projects
+                .Include(p => p.ProjectTasks)
+                .FirstOrDefaultAsync(p =>p.Id == id);
+
             if (project is null)
             {
                 throw new NotFoundException($"Project with id {id} does not exist. ");
@@ -45,7 +48,9 @@ namespace ProjectManager.Repositories
 
         public async Task<List<Project>> GettAll()
         {
-            var projects  = await _context.Projects.ToListAsync();
+            var projects  = await _context.Projects
+                .Include(p =>p.ProjectTasks)
+                .ToListAsync();
             return projects;
         }
 

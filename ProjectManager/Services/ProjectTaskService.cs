@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ProjectManager.Data.Models;
 using ProjectManager.DTOs.ProjectDTO;
 using ProjectManager.DTOs.ProjectTasksDTO;
 using ProjectManager.Repositories;
+using System.Data;
 
 namespace ProjectManager.Services
 {
@@ -17,9 +19,10 @@ namespace ProjectManager.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ProjectTaskDto>> GetAll()
+        public async Task<List<ProjectTaskDto>> GetAll(string? searchText,
+             DateTime? dueDate, bool? isCompleted)
         {
-            var projectTasks = await _projectTaskRepository.GettAll();
+            var projectTasks = await _projectTaskRepository.GettAll(searchText,dueDate, isCompleted);
             return _mapper.Map<List<ProjectTaskDto>>(projectTasks);
         }
 

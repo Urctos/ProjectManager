@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectManager.DTOs.ProjectDTO;
 using ProjectManager.DTOs.ProjectTasksDTO;
 using ProjectManager.Services;
+using System.Data;
 
 namespace ProjectManager.Controllers
 {
@@ -24,9 +25,13 @@ namespace ProjectManager.Controllers
             _updateProjectTaskDtoValidator = updateProjectTaskDtoValidator;         
         }
         [HttpGet]
-        public async Task<ActionResult<List<ProjectTaskDto>>> GetAll()
-        {
-            var projectTasks = await _projectTasksService.GetAll();
+        public async Task<ActionResult<List<ProjectTaskDto>>> GetAll(
+            [FromQuery] string? searchText,
+            [FromQuery] DateTime? dueDate,
+            [FromQuery] bool? isCompleted
+            )
+        { 
+            var projectTasks = await _projectTasksService.GetAll(searchText, dueDate, isCompleted );
             return Ok(projectTasks);
         }
 

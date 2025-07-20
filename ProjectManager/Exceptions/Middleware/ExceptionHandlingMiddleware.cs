@@ -27,7 +27,7 @@ namespace ProjectManager.Exceptions.Middleware
             {
                 context.Response.ContentType = "text/plain";
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Internal server error!");
+                await context.Response.WriteAsync($"Internal server error: {ex.Message}");
             }
         }
     }

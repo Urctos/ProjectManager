@@ -2,6 +2,7 @@
 using ProjectManager.Data;
 using ProjectManager.Data.Models;
 using ProjectManager.Exceptions;
+using System.Data;
 
 namespace ProjectManager.Repositories
 {
@@ -31,9 +32,32 @@ namespace ProjectManager.Repositories
             _context.ProjectTasks.Remove(existingProjectTask);
             await _context.SaveChangesAsync();
         }
-        public async Task<List<ProjectTask>> GettAll()
+        public async Task<List<ProjectTask>> GettAll(string? searchText,
+             DateTime? dueDate, bool? isCompleted)
         {
-            return await _context.ProjectTasks
+            var query = _context.ProjectTasks.AsQueryable();
+
+            // Wyszukiwanie po tytule lub opisie 
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(pt => pt.Title.Contains(searchText.ToLower()) || pt.Description.Contains(searchText.ToLower()));
+            }
+
+
+            // filtrowanie po dacie 
+            if (dueDate.HasValue)
+            {
+                query = query.Where(pt => pt.DueDate <= dueDate);
+            }
+
+            // po statusie ukończenia
+            if (isCompleted.HasValue)
+            {
+                query = query.Where(pt => pt.IsCompleted == isCompleted);
+            }
+
+            return await query
                 .Include(x => x.Project)
                 .ToListAsync();
         }
