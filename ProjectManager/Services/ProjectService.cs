@@ -27,11 +27,11 @@ namespace ProjectManager.Services
            return _projectRepository.Delate(id);
         }
 
-        public async Task<List<ProjectDto>> GetAll()
+        public async Task<List<ProjectDto>> GetAll(string? searchText, string? sortBy, string? sortDirection)
         {
-            var projects = await _projectRepository.GettAll();
+            var projects = await _projectRepository.GettAll(searchText, sortBy, sortDirection);
             var projectDtos = _mapper.Map<List<ProjectDto>>(projects);
-            return (projectDtos);
+            return projectDtos;
         }
 
         public async Task<ProjectDto> GetById(int id)

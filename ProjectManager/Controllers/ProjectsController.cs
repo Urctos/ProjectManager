@@ -36,10 +36,16 @@ namespace ProjectManager.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProjectDto>>> GetAll()
+        public async Task<ActionResult<List<ProjectDto>>> GetAll(
+                        [FromQuery] string? searchText,
+                        [FromQuery] string? sortBy,
+                        [FromQuery] string? sortDirection
+                        )
         {
-            var projectDto = await _projectService.GetAll();
-            return Ok(projectDto);
+            var projects = await _projectService.GetAll(searchText, sortBy, sortDirection);
+            return Ok(projects);
+            //var projectDto = await _projectService.GetAll();
+            //return Ok(projectDto);
         }
 
         [HttpGet("{id}")]

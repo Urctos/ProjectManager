@@ -6,7 +6,7 @@ namespace ProjectManager.Repositories
     {
         public Task<Project> Create(Project project);
         public Task<Project> Update(Project project);
-        public Task<List<Project>> GettAll();
+        public Task<List<Project>> GettAll(string? searchText, string? sortBy, string? sortDirection);
         public Task<Project> GetById(int id);
         public Task Delate(int id);
     }

@@ -46,12 +46,43 @@ namespace ProjectManager.Repositories
             return project;
         }
 
-        public async Task<List<Project>> GettAll()
+        public async Task<List<Project>> GettAll(string? searchText, string? sortBy, string? sortDirection)
         {
-            var projects  = await _context.Projects
-                .Include(p =>p.ProjectTasks)
+            var query = _context.Projects.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(p =>p.Name.Contains(searchText) ||  p.Description.Contains(searchText));
+            }
+
+            // sortowanie
+            if (!string.IsNullOrEmpty(sortDirection))
+            {
+                sortBy = string.IsNullOrEmpty(sortBy) ? "" : sortBy;
+
+                switch (sortBy.ToLower())
+                {
+                    case "name":
+                        query = sortDirection.ToLower() == "asc" ? query.OrderBy(t => t.Name) : query.OrderByDescending(t => t.Name);
+                        break;
+                    case "creratedate":
+                        query = sortDirection.ToLower() == "Asc" ? query.OrderBy(t => t.CreatedDate) : query.OrderByDescending(t => t.CreatedDate);
+                        break;
+                    default:
+                        query = sortDirection.ToLower() == "Asc" ? query.OrderBy(t => t.Id) : query.OrderByDescending(t => t.Id);
+                        break;
+
+                }
+            }
+
+            return await query
+                .Include(p => p.ProjectTasks)
                 .ToListAsync();
-            return projects;
+
+            //var projects  = await _context.Projects
+            //    .Include(p =>p.ProjectTasks)
+            //    .ToListAsync();
+            //return projects;
         }
 
         public async Task<Project> Update(Project project)
